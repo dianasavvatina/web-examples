@@ -10,6 +10,12 @@ export async function approveTezosRequest(
   const { params, id } = requestEvent
   const { request } = params
 
+  console.log("FIXME: [approveTezosRequest] request=", request.params, " request.params.account=", request.params.account, " wallets=", tezosWallets)
+
+  if (!tezosWallets || Object.keys(tezosWallets).length === 0) {
+    return { method: request.method, address: request.params.account, valid: false, result: "No Tezos wallets available" };
+  }
+
   const wallet = tezosWallets[request.params.account ?? Object.keys(tezosWallets)[0]]
   const allWallets = Object.keys(tezosWallets).map(key => tezosWallets[key])
 
