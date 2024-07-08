@@ -55,7 +55,9 @@ export default class TezosLib {
       curve: curve ?? DEFAULT_CURVE
     }
 
-    const Tezos = new TezosToolkit('https://mainnet.api.tez.ie')
+    // BUG_1 Wallet uses mainnet ignoring the switch to testnets
+    // const Tezos = new TezosToolkit('https://mainnet.api.tez.ie')
+    const Tezos = new TezosToolkit('https://rpc.ghostnet.teztnets.com')
 
     const signer = InMemorySigner.fromMnemonic(params)
 
