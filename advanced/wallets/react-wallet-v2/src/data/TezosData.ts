@@ -44,6 +44,7 @@ export const TEZOS_CHAINS = { ...TEZOS_MAINNET_CHAINS, ...TEZOS_TEST_CHAINS }
  */
 export const TEZOS_SIGNING_METHODS = {
   TEZOS_GET_ACCOUNTS: 'tezos_getAccounts',
+  TEZOS_GET_BALANCE: 'tezos_getBalance',
   TEZOS_SEND: 'tezos_send',
   TEZOS_SIGN: 'tezos_sign'
 }

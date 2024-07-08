@@ -421,6 +421,10 @@ const Home: NextPage = () => {
       openRequestModal();
       await tezosRpc.testGetAccounts(chainId, address);
     };
+    const onGetBalance = async (chainId: string, address: string) => {
+      openRequestModal();
+      await tezosRpc.testGetBalance(chainId, address);
+    };
     const onSignTransaction = async (chainId: string, address: string) => {
       openRequestModal();
       await tezosRpc.testSignTransaction(chainId, address);
@@ -433,6 +437,10 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_TEZOS_METHODS.TEZOS_GET_ACCOUNTS,
         callback: onGetAccounts,
+      },
+      {
+        method: DEFAULT_TEZOS_METHODS.TEZOS_GET_BALANCE,
+        callback: onGetBalance,
       },
       {
         method: DEFAULT_TEZOS_METHODS.TEZOS_SEND,

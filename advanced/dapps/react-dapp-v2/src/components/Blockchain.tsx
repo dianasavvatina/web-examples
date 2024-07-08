@@ -139,6 +139,9 @@ const Blockchain: FC<PropsWithChildren<BlockchainProps>> = (
     typeof account !== "undefined" && typeof balances !== "undefined"
       ? balances[account]
       : [];
+
+  console.log("FIXME : actions array =", actions); // Debug log
+
   return (
     <React.Fragment>
       <SAccount

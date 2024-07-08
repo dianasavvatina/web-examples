@@ -129,6 +129,7 @@ interface IContext {
   };
   tezosRpc: {
     testGetAccounts: TRpcRequestCallback;
+    testGetBalance: TRpcRequestCallback;
     testSignMessage: TRpcRequestCallback;
     testSignTransaction: TRpcRequestCallback;
   };
@@ -1453,6 +1454,31 @@ export function JsonRpcContextProvider({
         };
       }
     ),
+    testGetBalance: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+
+        const result = await client!.request<{balance: string }>({
+          chainId,
+          topic: session!.topic,
+          request: {
+            method: DEFAULT_TEZOS_METHODS.TEZOS_GET_BALANCE,
+            params: {
+              account: address
+            },
+          },
+        });
+
+        return {
+          method: DEFAULT_TEZOS_METHODS.TEZOS_GET_BALANCE,
+          address,
+          valid: true,
+          result: JSON.stringify(result.balance, null, 2),
+        };
+      }
+    ),
     testSignMessage: _createJsonRpcRequestHandler(
       async (
         chainId: string,
@@ -1633,7 +1659,7 @@ export function JsonRpcContextProvider({
       }
     ),
   };
-
+  console.log("FIXME [JsonRpcContextProvider] tezosRpc=", tezosRpc)
   return (
     <JsonRpcContext.Provider
       value={{

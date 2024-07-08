@@ -13,8 +13,15 @@ export async function approveTezosRequest(
   console.log("FIXME: [approveTezosRequest] request=", request.params, " request.params.account=", request.params.account, " wallets=", tezosWallets)
 
   if (!tezosWallets || Object.keys(tezosWallets).length === 0) {
-    return { method: request.method, address: request.params.account, valid: false, result: "No Tezos wallets available" };
+    console.log("[approveTezosRequest] no wallets")
+    return formatJsonRpcResult(id, {
+      method: request.method,
+      address: request.params.account,
+      valid: false,
+      result: "No Tezos wallets available"
+    });
   }
+
 
   const wallet = tezosWallets[request.params.account ?? Object.keys(tezosWallets)[0]]
   const allWallets = Object.keys(tezosWallets).map(key => tezosWallets[key])
@@ -29,6 +36,15 @@ export async function approveTezosRequest(
           pubkey: wallet.getPublicKey()
         }))
       )
+
+    case TEZOS_SIGNING_METHODS.TEZOS_GET_BALANCE:
+      try {
+        const balance = await wallet.getBalance();
+        return formatJsonRpcResult(id, { balance });
+      } catch (error) {
+        console.error(error);
+        return formatJsonRpcError(id, error.message);
+      }
 
     case TEZOS_SIGNING_METHODS.TEZOS_SEND:
       const sendResponse = await wallet.signTransaction(request.params.operations)

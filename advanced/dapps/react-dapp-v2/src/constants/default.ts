@@ -246,6 +246,7 @@ export enum DEFAULT_TRON_EVENTS {}
  */
 export enum DEFAULT_TEZOS_METHODS {
   TEZOS_GET_ACCOUNTS = "tezos_getAccounts",
+  TEZOS_GET_BALANCE = "tezos_getBalance",
   TEZOS_SEND = "tezos_send",
   TEZOS_SIGN = "tezos_sign",
 }

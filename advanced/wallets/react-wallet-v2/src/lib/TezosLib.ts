@@ -86,6 +86,18 @@ export default class TezosLib {
     return this.address
   }
 
+  public async getBalance() {
+    try {
+      const balance = await this.tezos.tz.getBalance(this.address);
+      const balanceInTez = balance.toNumber() / 1000000;
+      console.log(`${balanceInTez} ꜩ`);
+      return `${balanceInTez} ꜩ`;
+    } catch (error) {
+      console.error(JSON.stringify(error));
+      throw new Error('Failed to fetch balance');
+    }
+  }
+
   public async signTransaction(transaction: any) {
     const prepared = await this.tezos.prepare.batch(
       transaction.map((tx: any) => ({
